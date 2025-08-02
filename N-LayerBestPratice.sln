@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N-LayerBestPratice.Repository", "N-LayerBestPratice.Repository\N-LayerBestPratice.Repository.csproj", "{AC0668F5-320D-4238-BB2C-F51A814FC413}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N-LayerBestPratice.Services", "N-LayerBestPratice.Services\N-LayerBestPratice.Services.csproj", "{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N-LayerBestPratice.Api", "N-LayerBestPratice.Api\N-LayerBestPratice.Api.csproj", "{CADEDB1F-F12C-4DE5-B0A2-CE2023E81AE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{AC0668F5-320D-4238-BB2C-F51A814FC413}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC0668F5-320D-4238-BB2C-F51A814FC413}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC0668F5-320D-4238-BB2C-F51A814FC413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADEDB1F-F12C-4DE5-B0A2-CE2023E81AE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADEDB1F-F12C-4DE5-B0A2-CE2023E81AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADEDB1F-F12C-4DE5-B0A2-CE2023E81AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADEDB1F-F12C-4DE5-B0A2-CE2023E81AE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

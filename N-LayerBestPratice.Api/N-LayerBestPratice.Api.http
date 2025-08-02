@@ -1,0 +1,6 @@
+@N_LayerBestPratice.Api_HostAddress = http://localhost:5157
+
+GET {{N_LayerBestPratice.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
