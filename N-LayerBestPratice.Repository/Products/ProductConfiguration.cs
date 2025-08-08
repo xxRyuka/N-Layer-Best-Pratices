@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using N_LayerBestPratice.Repository.Entity;
+using N_LayerBestPratice.Repository.Products;
 
-namespace N_LayerBestPratice.Repository.Configurations;
+namespace N_LayerBestPratice.Repository.Products;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using N_LayerBestPratice.Repository.Entity;
+using N_LayerBestPratice.Repository.Products;
 
 namespace N_LayerBestPratice.Repository.DbContext;
 

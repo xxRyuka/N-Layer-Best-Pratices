@@ -1,4 +1,4 @@
-﻿namespace N_LayerBestPratice.Repository.Entity;
+﻿namespace N_LayerBestPratice.Repository.Products;
 
 public class Product
 {
