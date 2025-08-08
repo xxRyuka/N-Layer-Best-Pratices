@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using N_LayerBestPratice.Repository.DbContext;
 using N_LayerBestPratice.Repository.Extensions;
+using N_LayerBestPratice.Services.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// var deneme = builder.Services;
 builder.Services.AddRepositories(builder.Configuration);
 
+builder.Services.AddServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

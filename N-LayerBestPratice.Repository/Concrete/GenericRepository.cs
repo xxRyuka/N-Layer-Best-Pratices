@@ -7,19 +7,18 @@ namespace N_LayerBestPratice.Repository.Concrete;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    private readonly AppDbContext _context;
+    protected readonly AppDbContext _context;
 
-    private readonly DbSet<T> _dbSet;
+    protected readonly DbSet<T> _dbSet;
 
-    public GenericRepository(AppDbContext context, DbSet<T> dbSet)
+    public GenericRepository(AppDbContext context)
     {
         _context = context;
         _dbSet = context.Set<T>();
-        ;
     }
 
 
-    public IQueryable<T> GetAll(bool trackChanges)
+    public IQueryable<T> GetAll(bool trackChanges = false)
     {
         // .AsQueryable() opsiyonel yani zaten  where bir IQueryable döndürüyor
 
@@ -28,7 +27,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return trackChanges ? _dbSet.AsQueryable() : _dbSet.AsNoTracking().AsQueryable();
     }
 
-    public IQueryable<T> Where(Expression<Func<T, bool>> predicate, bool trackChanges) // False ise izlemez
+    public IQueryable<T> Where(Expression<Func<T, bool>> predicate, bool trackChanges = false) // False ise izlemez
     {
         // .AsQueryable() opsiyonel yani zaten  where bir IQueryable döndürüyor
         return trackChanges
@@ -46,7 +45,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         await _dbSet.AddAsync(entity);
     }
 
-    public void Update(T entity) => _dbSet.Update(entity);
+    public void Update(T entity) => _dbSet.Update(entity); // simdilik bu sekilde yapalım sonra daha verimli update metodu yazacağim 
 
 
     public void Delete(T entity) => _dbSet.Remove(entity);
