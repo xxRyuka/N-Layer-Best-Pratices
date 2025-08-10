@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using N_LayerBestPratice.Services.Products;
 using N_LayerBestPratice.Services.Products.Dto.Create;
+using N_LayerBestPratice.Services.Products.Dto.Update;
 
 namespace N_LayerBestPratice.Api.Controllers;
 
@@ -16,17 +17,21 @@ public class ProductsController : CustomControllerBase
         _productService = productService;
     }
 
-    [HttpGet("get-all-products")]
-    // [HttpGet]
+    [HttpGet("products")]
     public async Task<IActionResult> Index() => CreateActionResult(await _productService.GetAllProductsAsync());
 
-    [HttpGet("get-top-price-products")]
+    [HttpGet("top-price-products")]
     public async Task<IActionResult> GetTopPriceProducts(int count) => CreateActionResult(await _productService.GetTopPriceProductsAsync(count));
     
-    [HttpGet("get-product-by-id")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetProductById(int id) => CreateActionResult(await _productService.GetProductByIdAsync(id));
     
-    [HttpPost("create-product")]
-    public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest? request) 
-        => CreateActionResult(await _productService.CreateProductAsync(request));
+    [HttpPost("product")]
+    public async Task<IActionResult> CreateProduct( CreateProductRequest? request) => CreateActionResult(await _productService.CreateProductAsync(request));
+    
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateProduct(int? id,  UpdateProductRequest? request) => CreateActionResult(await _productService.UpdateProductAsync(id, request));
+    
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteProduct(int? id) => CreateActionResult(await _productService.DeleteProductAsync(id));
 }

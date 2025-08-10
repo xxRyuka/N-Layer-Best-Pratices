@@ -36,13 +36,13 @@ public class CustomControllerBase : ControllerBase
         // switch ifadesiyle okunabilirlik artırılıyor.
         return result.Status switch
         {
-            ResultStatus.Success => Ok(result.Data), // Başarı: 200 OK + data
-            ResultStatus.Error => BadRequest(result.Errors), // Hata: 400 BadRequest + hata detayları
-            ResultStatus.NotFound => NotFound(result.Errors), // Bulunamadı: 404 NotFound + hata mesajları
-            ResultStatus.ValidationError => BadRequest(result.Errors), // Doğrulama hatası: 400 BadRequest
-            ResultStatus.UnAuthorized => Unauthorized(result.Errors), // Yetkisiz: 401 Unauthorized
+            ResultStatus.Success => Ok(result), // Başarı: 200 OK + data
+            ResultStatus.Error => BadRequest(result), // Hata: 400 BadRequest + hata detayları
+            ResultStatus.NotFound => NotFound(result), // Bulunamadı: 404 NotFound + hata mesajları
+            ResultStatus.ValidationError => BadRequest(result), // Doğrulama hatası: 400 BadRequest
+            ResultStatus.UnAuthorized => Unauthorized(result), // Yetkisiz: 401 Unauthorized
             ResultStatus.NoContent => NoContent(), // İçerik yok: 204 No Content
-            _ => StatusCode(500, result.Errors) // Diğer tüm durumlar için: 500 Internal Server Error
+            _ => StatusCode(500, result) // Diğer tüm durumlar için: 500 Internal Server Error
         };
     }
 
@@ -63,12 +63,12 @@ public class CustomControllerBase : ControllerBase
         return result.Status switch
         {
             ResultStatus.Success => Ok(), // Başarı: 200 OK (veri yok)
-            ResultStatus.Error => BadRequest(result.Errors),
-            ResultStatus.NotFound => NotFound(result.Errors),
-            ResultStatus.ValidationError => BadRequest(result.Errors),
-            ResultStatus.UnAuthorized => Unauthorized(result.Errors),
+            ResultStatus.Error => BadRequest(result),
+            ResultStatus.NotFound => NotFound(result),
+            ResultStatus.ValidationError => BadRequest(result),
+            ResultStatus.UnAuthorized => Unauthorized(result),
             ResultStatus.NoContent => NoContent(),
-            _ => StatusCode(500, result.Errors)
+            _ => StatusCode(500, result)
         };
     }
 }

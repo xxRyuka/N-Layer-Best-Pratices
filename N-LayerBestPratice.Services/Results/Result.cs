@@ -1,12 +1,16 @@
-﻿namespace N_LayerBestPratice.Services.Results;
+﻿using System.Text.Json.Serialization;
+
+namespace N_LayerBestPratice.Services.Results;
 
 public class Result
 {
     public bool IsSuccess => Status == ResultStatus.Success;
-    public bool IsFail => !IsSuccess;
+    [JsonIgnore]public bool IsFail => !IsSuccess;
     public IReadOnlyList<Error> Errors { get; }
 
-    public ResultStatus Status { get; }
+    [JsonIgnore]public ResultStatus Status { get; } 
+    
+    
 
     protected Result(ResultStatus status, List<Error>? errors = null)
     {
@@ -15,9 +19,9 @@ public class Result
         Errors = (errors ?? new List<Error>()).AsReadOnly();
     }
 
-    public static Result Success()
+    public static Result Success(ResultStatus status = ResultStatus.Success)
     {
-        return new Result(ResultStatus.Success);
+        return new Result(status);
     }
 
     public static Result Failure(ResultStatus status, params Error[] errors)

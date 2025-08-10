@@ -27,6 +27,9 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
 
     public async Task<Result<List<ProductDto>>> GetTopPriceProductsAsync(int count)
     {
+        
+        
+        
         var list = await _productRepository.GetTopPriceProducts(count);
 
 
@@ -101,7 +104,7 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
         entity.Stock = request.Stock;
         _productRepository.Update(entity);
         await _unitOfWork.SaveChangesAsync();
-        return Result.Success(); // No content response
+        return Result.Success(ResultStatus.NoContent); // No content response
     }
 
     public async Task<Result> DeleteProductAsync(int? id)
@@ -124,7 +127,8 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
                 Code = nameof(HttpStatusCode.NotFound)
             });
         }
-
-        return Result.Success();
+        _productRepository.Delete(entity);
+        await _unitOfWork.SaveChangesAsync();
+        return Result.Success(ResultStatus.NoContent);
     }
 }
