@@ -1,4 +1,6 @@
-﻿namespace N_LayerBestPratice.Services.Results;
+﻿using System.Net;
+
+namespace N_LayerBestPratice.Services.Results;
 
 public class Error
 {

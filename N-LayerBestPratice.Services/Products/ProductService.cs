@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Formatters;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using N_LayerBestPratice.Repository.Products;
 using N_LayerBestPratice.Repository.UnitOfWork;
@@ -45,10 +46,10 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
 
         if (entity == null)
         {
-            return Result<ProductDto>.Failure(new Error()
+            return Result<ProductDto>.Failure(ResultStatus.NotFound,new Error()
             {
                 Message = "Product not found",
-                Code = "NotFound"
+                Code = nameof(HttpStatusCode.NotFound)
             });
         }
 
@@ -61,10 +62,10 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
     {
         if (request == null)
         {
-            return (Result<CreateProductResponse>.Failure(new Error()
+            return (Result<CreateProductResponse>.Failure(ResultStatus.ValidationError,new Error()
             {
                 Message = "Request cannot be null",
-                Code = "BadRequest"
+                Code = nameof(HttpStatusCode.BadRequest)
             }));
         }
 
@@ -88,10 +89,10 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
         var entity = await _productRepository.GetByIdAsync(id.Value);
         if (entity == null)
         {
-            return Result.Failure(new Error()
+            return Result.Failure(ResultStatus.NotFound,new Error()
             {
                 Message = "Product not found",
-                Code = "NotFound"
+                Code = nameof(HttpStatusCode.NotFound)
             });
         }
 
@@ -107,20 +108,20 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
     {
         if (id == null)
         {
-            return Result.Failure(new Error()
+            return Result.Failure(ResultStatus.NotFound,new Error()
             {
                 Message = "Id cannot be null",
-                Code = "BadRequest"
+                Code = nameof(HttpStatusCode.BadRequest)
             });
         }
 
         var entity = await _productRepository.GetByIdAsync(id.Value);
         if (entity == null)
         {
-            return Result.Failure(new Error()
+            return Result.Failure(ResultStatus.NotFound, new Error()
             {
                 Message = "Product not found",
-                Code = "NotFound"
+                Code = nameof(HttpStatusCode.NotFound)
             });
         }
 

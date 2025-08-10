@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N-LayerBestPratice.Reposito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N-LayerBestPratice.Services", "N-LayerBestPratice.Services\N-LayerBestPratice.Services.csproj", "{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N-LayerBestPratice.Presentation", "N-LayerBestPratice.Presentation\N-LayerBestPratice.Presentation.csproj", "{B88F18DD-93C7-44A5-8B40-088D91748514}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N-LayerBestPratice.Api", "N-LayerBestPratice.Api\N-LayerBestPratice.Api.csproj", "{7349F237-1DE6-438D-9B9A-2B2FEF6B8FA1}"
 EndProject
 Global
@@ -22,10 +20,6 @@ Global
 		{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2FD558E-E5DE-425C-A0B4-948CE43EDB51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B88F18DD-93C7-44A5-8B40-088D91748514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B88F18DD-93C7-44A5-8B40-088D91748514}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B88F18DD-93C7-44A5-8B40-088D91748514}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B88F18DD-93C7-44A5-8B40-088D91748514}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7349F237-1DE6-438D-9B9A-2B2FEF6B8FA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7349F237-1DE6-438D-9B9A-2B2FEF6B8FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7349F237-1DE6-438D-9B9A-2B2FEF6B8FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
