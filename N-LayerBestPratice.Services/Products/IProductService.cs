@@ -9,6 +9,8 @@ public interface IProductService
 {
 
     Task<Result<List<ProductDto>>> GetAllProductsAsync();
+    
+    Task<Result<List<ProductDto>>> GetPagedProductsAsync(int pageNumber, int pageSize);
     Task<Result<List<ProductDto>>> GetTopPriceProductsAsync(int count);
     
     Task<Result<ProductDto>> GetProductByIdAsync(int id);
@@ -16,6 +18,8 @@ public interface IProductService
     Task<Result<CreateProductResponse>> CreateProductAsync(CreateProductRequest? request);
     
     Task<Result> UpdateProductAsync(int? id, UpdateProductRequest? request);
+    
+    Task<Result> UpdateProductStockAsync(UpdateProductStockRequest? request);
     
     Task<Result> DeleteProductAsync(int? id);
 }

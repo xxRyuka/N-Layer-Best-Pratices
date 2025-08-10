@@ -25,11 +25,29 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
             .ToListAsync());
     }
 
+    public async Task<Result<List<ProductDto>>> GetPagedProductsAsync(int pageNumber, int pageSize)
+    {
+        if (pageNumber <= 0 || pageSize <= 0)
+        {
+            return (Result<List<ProductDto>>.Failure(ResultStatus.ValidationError, new Error()
+            {
+                Message = "Page number and page size must be greater than zero",
+                Code = nameof(HttpStatusCode.BadRequest)
+            }));
+        }
+
+        // page number = 2 and page size = 10 means we want items from 11 to 20 bla bla 
+        var list = _productRepository.GetAll(trackChanges: false)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize);
+
+        return Result<List<ProductDto>>.Success(await list
+            .Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock))
+            .ToListAsync());
+    }
+
     public async Task<Result<List<ProductDto>>> GetTopPriceProductsAsync(int count)
     {
-        
-        
-        
         var list = await _productRepository.GetTopPriceProducts(count);
 
 
@@ -49,7 +67,7 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
 
         if (entity == null)
         {
-            return Result<ProductDto>.Failure(ResultStatus.NotFound,new Error()
+            return Result<ProductDto>.Failure(ResultStatus.NotFound, new Error()
             {
                 Message = "Product not found",
                 Code = nameof(HttpStatusCode.NotFound)
@@ -65,7 +83,7 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
     {
         if (request == null)
         {
-            return (Result<CreateProductResponse>.Failure(ResultStatus.ValidationError,new Error()
+            return (Result<CreateProductResponse>.Failure(ResultStatus.ValidationError, new Error()
             {
                 Message = "Request cannot be null",
                 Code = nameof(HttpStatusCode.BadRequest)
@@ -92,7 +110,7 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
         var entity = await _productRepository.GetByIdAsync(id.Value);
         if (entity == null)
         {
-            return Result.Failure(ResultStatus.NotFound,new Error()
+            return Result.Failure(ResultStatus.NotFound, new Error()
             {
                 Message = "Product not found",
                 Code = nameof(HttpStatusCode.NotFound)
@@ -107,11 +125,38 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
         return Result.Success(ResultStatus.NoContent); // No content response
     }
 
+    public async Task<Result> UpdateProductStockAsync(UpdateProductStockRequest request)
+    {
+        if (request.id == null)
+        {
+            return (Result.Failure(ResultStatus.ValidationError, new Error()
+            {
+                Message = "Id cannot be null",
+                Code = nameof(HttpStatusCode.BadRequest)
+            }));
+        }
+
+        var entity = await _productRepository.GetByIdAsync(request.id.Value);
+        if (entity == null)
+        {
+            return (Result.Failure(ResultStatus.NotFound, new Error()
+            {
+                Message = "Product not found",
+                Code = nameof(HttpStatusCode.NotFound)
+            }));
+        }
+
+        entity.Stock = request.stockQuantity;
+        _productRepository.Update(entity);
+        await _unitOfWork.SaveChangesAsync();
+        return Result.Success(ResultStatus.NoContent);
+    }
+
     public async Task<Result> DeleteProductAsync(int? id)
     {
         if (id == null)
         {
-            return Result.Failure(ResultStatus.NotFound,new Error()
+            return Result.Failure(ResultStatus.NotFound, new Error()
             {
                 Message = "Id cannot be null",
                 Code = nameof(HttpStatusCode.BadRequest)
@@ -127,6 +172,7 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
                 Code = nameof(HttpStatusCode.NotFound)
             });
         }
+
         _productRepository.Delete(entity);
         await _unitOfWork.SaveChangesAsync();
         return Result.Success(ResultStatus.NoContent);
