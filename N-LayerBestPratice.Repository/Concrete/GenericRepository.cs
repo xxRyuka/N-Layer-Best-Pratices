@@ -22,7 +22,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         // .AsQueryable() opsiyonel yani zaten  where bir IQueryable döndürüyor
 
-        var deneme = _context.Set<T>();
+        // var deneme = _context.Set<T>();
 
         return trackChanges ? _dbSet.AsQueryable() : _dbSet.AsNoTracking().AsQueryable();
     }
