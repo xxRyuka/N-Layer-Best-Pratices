@@ -1,4 +1,7 @@
-﻿    using Microsoft.Extensions.Configuration;
+﻿    using System.Reflection;
+    using FluentValidation;
+    using FluentValidation.AspNetCore;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using N_LayerBestPratice.Services.Products;
 
@@ -10,6 +13,9 @@
         {
             services.AddScoped<IProductService, ProductService>();
             
+            services.AddFluentValidationAutoValidation();
+            // Register validators from the current(Service Layer) assembly
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }
         

@@ -90,6 +90,20 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
             }));
         }
 
+        
+        // Bu kodu FluentValidation ile de yapabiliriz fakat orda yaptiğimiz kod senkron bir şekilde çalışıyor 
+        // Veritabaniyla etkileşimde bulunurken asenkron bir şekilde çalışmak daha iyi performans sağlar
+        // İslemleri bloklamaz :))
+        bool nameExits = await _productRepository.Where(x => x.Name == request.Name, trackChanges: false).AnyAsync();
+        if (nameExits)
+        {
+            return Result<CreateProductResponse>.Failure(ResultStatus.ValidationError, new Error()
+            {
+                Message = "Product with this name already exists",
+                Code = nameof(HttpStatusCode.Conflict)
+            });
+        }
+
         var entity = new Product
         {
             Name = request.Name,
