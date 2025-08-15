@@ -47,7 +47,7 @@ public class CustomControllerBase : ControllerBase
     }
 
     /// <summary>
-    /// Generic olmayan Result nesneleri için uygun HTTP yanıtı oluşturur.
+    /// Generic olmayan Result nesneleri için uygun HTTP yanıtı oluşturur(ama ResultStatus enumu uzerinden yonetiyoruz ilerde mobil desktop için).
     /// </summary>
     /// <param name="result">İşlem sonucu bilgisi içeren Result nesnesi</param>
     /// <returns>HTTP durumu ve gerekirse hata mesajı içeren IActionResult</returns>

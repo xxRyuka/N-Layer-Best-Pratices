@@ -7,5 +7,7 @@ public interface IProductRepository : IGenericRepository<Product>
     // bla bla gibisinden ozel metotlar,
     // bunları servicede özel yazabilirdik fakat sql sorgularını repositoryde yazmak mimari açısından daha mantıklı
     
-    Task<IEnumerable<Product>> GetTopPriceProducts(int count); 
+    // Task<IEnumerable<Product>> GetTopPriceProducts(int count); 
+
+    IQueryable<Product> GetTopPriceProducts(int count);
 }

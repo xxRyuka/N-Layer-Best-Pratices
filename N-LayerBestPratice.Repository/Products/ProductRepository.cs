@@ -9,10 +9,11 @@ public class ProductRepository(AppDbContext context) : GenericRepository<Product
     // yeni eklenen özelllikle artı ctoru class basında tanımlayabiliyoruz
 
 
-    public async Task<IEnumerable<Product>> GetTopPriceProducts(int count)
+    public IQueryable<Product> GetTopPriceProducts(int count)
     {
-        return await _dbSet.OrderByDescending(p => p.Price)
-            .Take(count)
-            .ToListAsync();
+        return _dbSet
+            .OrderByDescending(p => p.Price)
+            .Take(count);
+        // .ToListAsync();
     }
 }

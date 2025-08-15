@@ -45,6 +45,11 @@ public class Result<T> : Result
     {
         return new Result<T>(  ResultStatus.Success, data);
     }
+    
+    public static Result<T> Success(ResultStatus status ,T data)
+    {
+        return new Result<T>( status, data);
+    }
 
     // uyari vermesin diye new keyword kullanildi 
     // sebebi Result ana classinin ayni isimde ve ayni parametreyi alan methodu var , amacimiz override etmek degil

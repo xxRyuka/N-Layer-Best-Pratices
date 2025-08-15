@@ -16,6 +16,8 @@
             services.AddFluentValidationAutoValidation();
             // Register validators from the current(Service Layer) assembly
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(expression => {},Assembly.GetExecutingAssembly());
+            // services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }
         

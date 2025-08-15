@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using N_LayerBestPratice.Repository.Products;
@@ -7,22 +8,38 @@ using N_LayerBestPratice.Services.Products.Dto;
 using N_LayerBestPratice.Services.Products.Dto.Create;
 using N_LayerBestPratice.Services.Products.Dto.Update;
 using N_LayerBestPratice.Services.Results;
+using AutoMapper.QueryableExtensions;
 
 namespace N_LayerBestPratice.Services.Products;
 
-public class ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork) : IProductService
+public class ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, IMapper mapper) : IProductService
 {
     private readonly IProductRepository _productRepository = productRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IMapper _mapper = mapper;
 
 
     public async Task<Result<List<ProductDto>>> GetAllProductsAsync()
     {
-        var list = _productRepository.GetAll(trackChanges: false);
+        var listQuery = _productRepository.GetAll(trackChanges: false);
 
-        return Result<List<ProductDto>>.Success(await list
-            .Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock))
-            .ToListAsync());
+        // var mappedList = _mapper.Map<List<ProductDto>> (await listQuery.ToListAsync());
+        
+        // Alternatively, you can use ProjectTo for better performance with IQueryable 
+        
+        
+        // query.ProjectTo<TDestination>(IConfigurationProvider configuration, bool disableCache = false) seklinde parametreye sahip 
+        // ProjectTo, AutoMapper'ın IQueryable üzerinde çalışmasını sağlar ve veritabanı sorgusunu optimize eder.
+        // Bu sayede, veritabanından sadece gerekli alanlar çekilir ve performans artar.
+        // Ayrıca, bu yöntemle veritabanı sorgusu optimize edilir ve gereksiz veriler çekilmez.
+        // Bu, özellikle büyük veri setlerinde performansı artırır.
+        // verdiğimiz configurationProvider ile AutoMapper'ın profilini kullanarak
+        // ProductDto'ya dönüşüm yapar.
+        var mappedList = await listQuery.ProjectTo<ProductDto>(_mapper.ConfigurationProvider).ToListAsync();
+        // mappedList ile listQuery üzerinden IQueryable<ProductDto> dönüyoruz sonrada ToListAsync ile listeye çeviriyoruz
+        
+        return Result<List<ProductDto>>.Success(mappedList);
+        
     }
 
     public async Task<Result<List<ProductDto>>> GetPagedProductsAsync(int pageNumber, int pageSize)
@@ -37,28 +54,26 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
         }
 
         // page number = 2 and page size = 10 means we want items from 11 to 20 bla bla 
-        var list = _productRepository.GetAll(trackChanges: false)
+        var list = await _productRepository.GetAll(trackChanges: false)
             .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize);
+            .Take(pageSize)
+            .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
-        return Result<List<ProductDto>>.Success(await list
-            .Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock))
-            .ToListAsync());
+        return Result<List<ProductDto>>.Success(list);
     }
 
     public async Task<Result<List<ProductDto>>> GetTopPriceProductsAsync(int count)
     {
-        var list = await _productRepository.GetTopPriceProducts(count);
+        var listQuery =  _productRepository.GetTopPriceProducts(count);
 
-
+        
         //Manual mapping from Product to ProductDto for now 
 
-        List<ProductDto> result = list
-            .Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock))
-            .ToList();
+        var resultQuery = listQuery.ProjectTo<ProductDto>(_mapper.ConfigurationProvider);
 
-
-        return Result<List<ProductDto>>.Success(result);
+    
+        return Result<List<ProductDto>>.Success(await resultQuery.ToListAsync());
     }
 
     public async Task<Result<ProductDto>> GetProductByIdAsync(int id)
@@ -74,8 +89,9 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
             });
         }
 
-        //Manual mapping from Product to ProductDto for now
-        ProductDto result = new ProductDto(entity.Id, entity.Name, entity.Price, entity.Stock);
+        // Manual mapping from Product to ProductDto for now
+        // ProductDto result = new ProductDto(entity.Id, entity.Name, entity.Price, entity.Stock);
+        var result = _mapper.Map<ProductDto>(entity);
         return Result<ProductDto>.Success(result);
     }
 
@@ -104,19 +120,22 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
             });
         }
 
-        var entity = new Product
-        {
-            Name = request.Name,
-            Price = request.Price,
-            Stock = request.Stock
-        };
-
+        // var entity = new Product
+        // {
+        //     Name = request.Name,
+        //     Price = request.Price,
+        //     Stock = request.Stock
+        // };
+        //
+        
+        var entity = _mapper.Map<Product>(request); // AutoMapper ile de yapabiliriz
         await _productRepository.AddAsync(entity);
         await _unitOfWork.SaveChangesAsync();
 
+        var responseDto = _mapper.Map<CreateProductResponse>(entity);
+        
         return Result<CreateProductResponse>
-            .Success(new
-                CreateProductResponse(entity.Id, entity.Name, entity.Price, entity.Stock));
+            .Success(status:ResultStatus.Created,responseDto); // Created response
     }
 
     public async Task<Result> UpdateProductAsync(int? id, UpdateProductRequest? request)
