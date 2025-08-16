@@ -9,6 +9,7 @@ using N_LayerBestPratice.Services.Products.Dto.Create;
 using N_LayerBestPratice.Services.Products.Dto.Update;
 using N_LayerBestPratice.Services.Results;
 using AutoMapper.QueryableExtensions;
+using N_LayerBestPratice.Services.ExceptionHandlers;
 
 namespace N_LayerBestPratice.Services.Products;
 
@@ -21,6 +22,9 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
 
     public async Task<Result<List<ProductDto>>> GetAllProductsAsync()
     {
+        // Testini yaptim istediğim gibi sonuç donduruyor artık ^^ 
+        // throw new CriticalException("This is a critical exception in ProductService.GetAllProductsAsync");
+        
         var listQuery = _productRepository.GetAll(trackChanges: false);
 
         // var mappedList = _mapper.Map<List<ProductDto>> (await listQuery.ToListAsync());
@@ -119,16 +123,8 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
                 Code = nameof(HttpStatusCode.Conflict)
             });
         }
-
-        // var entity = new Product
-        // {
-        //     Name = request.Name,
-        //     Price = request.Price,
-        //     Stock = request.Stock
-        // };
-        //
         
-        var entity = _mapper.Map<Product>(request); // AutoMapper ile de yapabiliriz
+        var entity = _mapper.Map<Product>(request); 
         await _productRepository.AddAsync(entity);
         await _unitOfWork.SaveChangesAsync();
 

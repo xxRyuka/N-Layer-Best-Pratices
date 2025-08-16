@@ -8,5 +8,6 @@ public enum ResultStatus
     NotFound,
     ValidationError,
     Error,
-    UnAuthorized
+    UnAuthorized,
+    InternalServerError,
 }
