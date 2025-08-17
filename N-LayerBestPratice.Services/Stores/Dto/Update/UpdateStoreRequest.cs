@@ -2,5 +2,6 @@
 
 public class UpdateStoreRequest
 {
-    
+    public string StoreName { get; set; }
+   
 }

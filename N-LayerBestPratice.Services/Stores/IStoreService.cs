@@ -6,10 +6,9 @@ namespace N_LayerBestPratice.Services.Stores;
 
 public interface IStoreService
 {
-    Task<StoreDto> GetStoreByIdAsync(int storeId);
-    Task<List<StoreDto>> GetStoresWithProductsAsync();
-    Task<CreateStoreResponse> CreateStoreAsync(CreateStoreRequest request);
-    Task UpdateStoreAsync(int storeId, UpdateStoreRequest request);
-    Task DeleteStoreAsync(int storeId);
-    
+    Task<StoreDto> GetStoreByIdAsync(int storeId); // REFACTOR EDİLECEK
+    Task<List<StoreDto>> GetStoresWithProductsAsync(); // REFACTOR EDİLECEK
+    Task<CreateStoreResponse> CreateStoreAsync(CreateStoreRequest request); // REFACTOR EDİLECEK
+    Task UpdateStoreAsync(int storeId, UpdateStoreRequest request); // REFACTOR EDİLECEK
+    Task DeleteStoreAsync(int storeId); // REFACTOR EDİLECEK
 }
