@@ -2,6 +2,7 @@
 using N_LayerBestPratice.Services.Products;
 using N_LayerBestPratice.Services.Products.Dto.Create;
 using N_LayerBestPratice.Services.Products.Dto.Update;
+using N_LayerBestPratice.Services.Products.Dto.UpdateProductStock;
 
 namespace N_LayerBestPratice.Api.Controllers;
 

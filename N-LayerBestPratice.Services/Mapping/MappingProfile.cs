@@ -19,6 +19,10 @@ public class MappingProfile : Profile
         CreateMap<Product, CreateProductRequest>();
         CreateMap<Product, CreateProductResponse>();
 
+        CreateMap<CreateProductRequest, Product>();
+        
+        
+        
         CreateMap<Product, UpdateProductRequest>();
         
         

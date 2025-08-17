@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using N_LayerBestPratice.Repository.Products;
+using N_LayerBestPratice.Repository.Stores;
 
 namespace N_LayerBestPratice.Repository.DbContext;
 
@@ -8,13 +9,13 @@ namespace N_LayerBestPratice.Repository.DbContext;
 public class AppDbContext(DbContextOptions<AppDbContext> options) : Microsoft.EntityFrameworkCore.DbContext(options)
 {
     public DbSet<Product> Products { get; set; }
+    public DbSet<Store> Stores { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Apply configurations for entities
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
     }
 }

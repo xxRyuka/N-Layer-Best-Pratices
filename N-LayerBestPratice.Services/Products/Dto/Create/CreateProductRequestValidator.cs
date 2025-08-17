@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using N_LayerBestPratice.Services.Products.Dto.Create;
 
-namespace N_LayerBestPratice.Services.Products.Validations;
+namespace N_LayerBestPratice.Services.Products.Dto.Create;
 
 public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
 {

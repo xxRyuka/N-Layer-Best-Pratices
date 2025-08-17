@@ -5,6 +5,7 @@ using N_LayerBestPratice.Repository.Abstract;
 using N_LayerBestPratice.Repository.Concrete;
 using N_LayerBestPratice.Repository.DbContext;
 using N_LayerBestPratice.Repository.Products;
+using N_LayerBestPratice.Repository.Stores;
 using N_LayerBestPratice.Repository.UnitOfWork;
 
 namespace N_LayerBestPratice.Repository.Extensions;
@@ -30,6 +31,7 @@ public static class RepositoryExtensions
 
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IStoreRepository, StoreRepository>();
         services.AddScoped((typeof(IGenericRepository<>)), (typeof(GenericRepository<>)));
         return services;
     }

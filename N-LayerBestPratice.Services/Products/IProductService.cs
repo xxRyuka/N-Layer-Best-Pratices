@@ -1,6 +1,7 @@
 ﻿using N_LayerBestPratice.Services.Products.Dto;
 using N_LayerBestPratice.Services.Products.Dto.Create;
 using N_LayerBestPratice.Services.Products.Dto.Update;
+using N_LayerBestPratice.Services.Products.Dto.UpdateProductStock;
 using N_LayerBestPratice.Services.Results;
 
 namespace N_LayerBestPratice.Services.Products;

@@ -10,6 +10,7 @@ using N_LayerBestPratice.Services.Products.Dto.Update;
 using N_LayerBestPratice.Services.Results;
 using AutoMapper.QueryableExtensions;
 using N_LayerBestPratice.Services.ExceptionHandlers;
+using N_LayerBestPratice.Services.Products.Dto.UpdateProductStock;
 
 namespace N_LayerBestPratice.Services.Products;
 
@@ -110,7 +111,14 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
             }));
         }
 
-        
+        if(request.StoreId == null)
+        {
+            return (Result<CreateProductResponse>.Failure(ResultStatus.ValidationError, new Error()
+            {
+                Message = "StoreId cannot be null",
+                Code = nameof(HttpStatusCode.BadRequest)
+            }));
+        }
         // Bu kodu FluentValidation ile de yapabiliriz fakat orda yaptiğimiz kod senkron bir şekilde çalışıyor 
         // Veritabaniyla etkileşimde bulunurken asenkron bir şekilde çalışmak daha iyi performans sağlar
         // İslemleri bloklamaz :))

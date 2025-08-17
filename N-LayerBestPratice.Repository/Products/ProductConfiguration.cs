@@ -23,6 +23,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Stock)
             .IsRequired();
 
+
+        builder.HasOne(p => p.Store)
+            .WithMany(c => c.Products)
+            .HasForeignKey(p => p.StoreId);
         // Additional configurations can be added here
         // For example, you can configure indexes, relationships, etc.
     }

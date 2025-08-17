@@ -21,7 +21,7 @@ namespace N_LayerBestPratice.Repository.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("N_LayerBestPratice.Repository.Entity.Product", b =>
+            modelBuilder.Entity("N_LayerBestPratice.Repository.Products.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,9 +40,48 @@ namespace N_LayerBestPratice.Repository.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("StoreId");
+
                     b.ToTable("Products", (string)null);
+                });
+
+            modelBuilder.Entity("N_LayerBestPratice.Repository.Stores.Store", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("StoreName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stores", (string)null);
+                });
+
+            modelBuilder.Entity("N_LayerBestPratice.Repository.Products.Product", b =>
+                {
+                    b.HasOne("N_LayerBestPratice.Repository.Stores.Store", "Store")
+                        .WithMany("Products")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("N_LayerBestPratice.Repository.Stores.Store", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
