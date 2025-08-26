@@ -49,4 +49,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
 
     public void Delete(T entity) => _dbSet.Remove(entity);
+    public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _dbSet.AnyAsync(predicate);
+    }
 }

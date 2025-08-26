@@ -11,7 +11,6 @@ public class StoreRepository(AppDbContext context) : GenericRepository<Store>(co
     public async Task<Store> GetStoreByIdAsync(int storeId)
     {
         var store = await _context.Stores
-            .Include(x=>x.Products)
             .FirstOrDefaultAsync(x => x.Id == storeId);
         
         return store;
@@ -30,6 +29,14 @@ public class StoreRepository(AppDbContext context) : GenericRepository<Store>(co
     {
         var storesWithProducts = _context.Stores
             .Include(x => x.Products)
+            .AsQueryable();
+        
+        return storesWithProducts;
+    }
+    
+    public IQueryable<Store> GetStores()
+    {
+        var storesWithProducts = _context.Stores
             .AsQueryable();
         
         return storesWithProducts;

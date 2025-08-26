@@ -2,10 +2,15 @@
 
 namespace N_LayerBestPratice.Services.Stores.Dto;
 
-public class StoreDto
+public class StoreBaseDto
 {
     public int Id { get; set; }
     public string StoreName { get; set; }
 
-    public List<ProductDto>? Products { get; set; } 
+}
+
+public class StoreDto<TProduct> : StoreBaseDto
+{
+    public List<TProduct>? Products { get; set; } 
+
 }

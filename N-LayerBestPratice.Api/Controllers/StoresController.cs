@@ -21,8 +21,34 @@ public class StoresController : ControllerBase
     [HttpGet("getStore")]
     public async Task<IActionResult> GetById(int storeId)
     {
+        // Working 
         var x = await _storeService.GetStoreByIdAsync(storeId);
         return Ok(x);
+    }
+
+    [HttpGet("getStoreWithProducts")]
+    public async Task<IActionResult> GetStoreWithProductsById(int storeId)
+    {
+        var x = await _storeService.GetStoreWithProductsByIdAsync(storeId);
+        return Ok(x);
+    }
+
+    
+    [HttpGet("getStores")]
+    public async Task<IActionResult> GetStores()
+    {
+        // Working
+        var stores = await _storeService.GetStoresAsync();
+        return Ok(stores);
+    }
+    
+    
+    
+    [HttpGet("getStoresWithProducts")]
+    public async Task<IActionResult> GetStoresWithProducts()
+    {
+        var stores = await _storeService.GetStoresWithProductsAsync();
+        return Ok(stores);
     }
 
     [HttpPost]
@@ -32,26 +58,23 @@ public class StoresController : ControllerBase
         return Ok(store);
     }
 
-    [HttpGet("getStoresWithProducts")]
-    public async Task<IActionResult> GetStoresWithProducts()
-    {
-        var stores = await _storeService.GetStoresWithProductsAsync();
-        return Ok(stores);
-    }
 
     [HttpPut("{storeId:int}")]
     public async Task<IActionResult> UpdateStore(int storeId, UpdateStoreRequest request)
     {
-        await _storeService.UpdateStoreAsync(storeId, request);
+        // await _storeService.UpdateStoreAsync(storeId, request);
 
-        return Ok();
+        return Ok( await _storeService.UpdateStoreAsync(storeId, request));
     }
 
 
     [HttpDelete("{storeId:int}")]
     public async Task<IActionResult> DeleteStore(int storeId)
     {
-        await _storeService.DeleteStoreAsync(storeId);
-        return Ok();
-    }                      
+       
+        return Ok( await _storeService.DeleteStoreAsync(storeId));
+    }                   
+    
+    
+    
 }

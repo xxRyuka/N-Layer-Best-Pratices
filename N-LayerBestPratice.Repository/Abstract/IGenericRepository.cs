@@ -16,4 +16,6 @@ public interface IGenericRepository<T> where T : class
     
     void Delete(T entity);
     
+    Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
+    
 }
