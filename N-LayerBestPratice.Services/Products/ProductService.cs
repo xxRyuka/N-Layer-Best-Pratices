@@ -153,7 +153,15 @@ public class ProductService(IProductRepository productRepository, IUnitOfWork un
                 Code = nameof(HttpStatusCode.NotFound)
             });
         }
-
+        var exits = await _productRepository.AnyAsync(x=>x.Name == request.Name && x.Id != id);
+        if (exits)
+        {
+            return Result.Failure(ResultStatus.ValidationError, new Error()
+            {
+                Message = "Product with this name already exists",
+                Code = "ProductNameExists"
+            });
+        }
         entity.Name = request.Name;
         entity.Price = request.Price;
         entity.Stock = request.Stock;

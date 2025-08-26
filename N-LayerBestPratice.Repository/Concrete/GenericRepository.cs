@@ -5,7 +5,7 @@ using N_LayerBestPratice.Repository.DbContext;
 
 namespace N_LayerBestPratice.Repository.Concrete;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class
+public class GenericRepository<T,TId> : IGenericRepository<T,TId> where T : BaseEntity<TId> where TId : struct
 {
     protected readonly AppDbContext _context;
 
@@ -52,5 +52,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
     {
         return await _dbSet.AnyAsync(predicate);
+    }
+    
+    
+    public async Task<bool> AnyByIdAsync(TId TId)
+    {
+        return await _dbSet.AnyAsync(e => e.Id.Equals(TId));
     }
 }

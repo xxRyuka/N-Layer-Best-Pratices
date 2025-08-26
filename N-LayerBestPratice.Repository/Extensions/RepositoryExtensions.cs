@@ -33,7 +33,7 @@ public static class RepositoryExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IStoreRepository, StoreRepository>();
-        services.AddScoped((typeof(IGenericRepository<>)), (typeof(GenericRepository<>)));
+        services.AddScoped((typeof(IGenericRepository<,>)), (typeof(GenericRepository<,>)));    
         return services;
     }
 }

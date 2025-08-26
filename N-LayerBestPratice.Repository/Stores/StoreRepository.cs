@@ -4,7 +4,7 @@ using N_LayerBestPratice.Repository.DbContext;
 
 namespace N_LayerBestPratice.Repository.Stores;
 
-public class StoreRepository(AppDbContext context) : GenericRepository<Store>(context), IStoreRepository
+public class StoreRepository(AppDbContext context) : GenericRepository<Store,int>(context), IStoreRepository
 {
  
 

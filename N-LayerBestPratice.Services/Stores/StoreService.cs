@@ -31,14 +31,14 @@ public class StoreService : IStoreService
 
     public async Task<Result<StoreDto<ProductDto>>> GetStoreWithProductsByIdAsync(int storeId) // resulted + mapped 
     {
-        if (storeId is <= 0)
-        {
-            return Result<StoreDto<ProductDto>>.Failure(ResultStatus.ValidationError, new Error()
-            {
-                Message = "Store ID is invalid.",
-                Code = "InvalidStoreId"
-            });
-        }
+        // if (storeId is <= 0)
+        // {
+        //     return Result<StoreDto<ProductDto>>.Failure(ResultStatus.ValidationError, new Error()
+        //     {
+        //         Message = "Store ID is invalid.",
+        //         Code = "InvalidStoreId"
+        //     });
+        // }
 
         var entity = await _storeRepository.GetByIdWithProductsAsync(storeId);
 
@@ -58,14 +58,14 @@ public class StoreService : IStoreService
 
     public async Task<Result<StoreBaseDto>> GetStoreByIdAsync(int storeId) // resulted + mapped
     {
-        if (storeId is <= 0)
-        {
-            return Result<StoreBaseDto>.Failure(ResultStatus.NotFound, new Error()
-            {
-                Message = "Store ID is invalid.",
-                Code = "InvalidStoreId"
-            });
-        }
+        // if (storeId is <= 0)
+        // {
+        //     return Result<StoreBaseDto>.Failure(ResultStatus.NotFound, new Error()
+        //     {
+        //         Message = "Store ID is invalid.",
+        //         Code = "InvalidStoreId"
+        //     });
+        // }
 
         var entity = await _storeRepository.GetStoreByIdAsync(storeId);
 
@@ -136,14 +136,14 @@ public class StoreService : IStoreService
 
     public async Task<Result> UpdateStoreAsync(int storeId, UpdateStoreRequest request) // resulted
     {
-        if (storeId <= 0 || request == null)
-        {
-            return Result.Failure(ResultStatus.ValidationError, new Error()
-            {
-                Message = "Invalid store ID or request.",
-                Code = "InvalidStoreIdOrRequest"
-            });
-        }
+        // if (storeId <= 0 || request == null)
+        // {
+        //     return Result.Failure(ResultStatus.ValidationError, new Error()
+        //     {
+        //         Message = "Invalid store ID or request.",
+        //         Code = "InvalidStoreIdOrRequest"
+        //     });
+        // }
 
         bool exists = await _storeRepository.AnyAsync(x => x.StoreName == request.StoreName && x.Id != storeId);
 

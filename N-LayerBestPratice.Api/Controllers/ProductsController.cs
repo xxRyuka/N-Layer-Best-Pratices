@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using N_LayerBestPratice.Repository.Products;
+using N_LayerBestPratice.Services.Filters;
 using N_LayerBestPratice.Services.Products;
 using N_LayerBestPratice.Services.Products.Dto.Create;
 using N_LayerBestPratice.Services.Products.Dto.Update;
@@ -30,6 +32,7 @@ public class ProductsController : CustomControllerBase
     public async Task<IActionResult> GetPagedProducts(int pageNumber, int pageSize) =>
         CreateActionResult(await _productService.GetPagedProductsAsync(pageNumber, pageSize));
     
+    [ServiceFilter(typeof(NotFoundFilter<Product,int>))]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetProductById(int id) => 
         CreateActionResult(await _productService.GetProductByIdAsync(id));
@@ -38,6 +41,9 @@ public class ProductsController : CustomControllerBase
     public async Task<IActionResult> CreateProduct( CreateProductRequest? request) => 
         CreateActionResult(await _productService.CreateProductAsync(request));
     
+    
+    
+    [ServiceFilter(typeof(NotFoundFilter<Product,int>))]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateProduct(int? id,  UpdateProductRequest? request) => 
         CreateActionResult(await _productService.UpdateProductAsync(id, request));
@@ -46,7 +52,7 @@ public class ProductsController : CustomControllerBase
     public async Task<IActionResult> UpdateProductStock([FromBody]UpdateProductStockRequest request) => 
         CreateActionResult(await _productService.UpdateProductStockAsync(request));
     
-    
+    [ServiceFilter(typeof(NotFoundFilter<Product,int>))]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteProduct(int? id) => 
         CreateActionResult(await _productService.DeleteProductAsync(id));

@@ -2,7 +2,7 @@
 
 namespace N_LayerBestPratice.Repository.Abstract;
 
-public interface IGenericRepository<T> where T : class
+public interface IGenericRepository<T,TId> where T : class where TId : struct
 {
     IQueryable<T> GetAll(bool trackChanges = false);
     
@@ -17,5 +17,9 @@ public interface IGenericRepository<T> where T : class
     void Delete(T entity);
     
     Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
-    
+
+
+    Task<bool> AnyByIdAsync(TId TId);
+
+
 }

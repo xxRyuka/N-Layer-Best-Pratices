@@ -4,7 +4,7 @@ using N_LayerBestPratice.Repository.DbContext;
 
 namespace N_LayerBestPratice.Repository.Products;
 
-public class ProductRepository(AppDbContext context) : GenericRepository<Product>(context), IProductRepository
+public class ProductRepository(AppDbContext context) : GenericRepository<Product,int>(context), IProductRepository
 {
     // yeni eklenen özelllikle artı ctoru class basında tanımlayabiliyoruz
 

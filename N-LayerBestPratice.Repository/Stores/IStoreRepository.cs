@@ -3,7 +3,7 @@ using N_LayerBestPratice.Repository.Products;
 
 namespace N_LayerBestPratice.Repository.Stores;
 
-public interface IStoreRepository : IGenericRepository<Store>
+public interface IStoreRepository : IGenericRepository<Store,int>
 {
     Task<Store> GetStoreByIdAsync(int storeId);
     Task<Store> GetByIdWithProductsAsync(int storeId);

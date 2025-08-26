@@ -1,11 +1,12 @@
 ﻿using N_LayerBestPratice.Repository.Abstract;
+using N_LayerBestPratice.Repository.Concrete;
 using N_LayerBestPratice.Repository.Stores;
 
 namespace N_LayerBestPratice.Repository.Products;
 
-public class Product : IAuditEntity
+public class Product : BaseEntity<int>,IAuditEntity
 {
-    public int Id { get; set; }
+    // public int Id { get; set; }
     public string Name { get; set; } = null!;
     public decimal Price { get; set; }
     public int Stock { get; set; }
